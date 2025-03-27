@@ -77,7 +77,7 @@ public abstract class Gun : MonoBehaviour
         Shoot();
 
         // recoil
-        characterController.ApplyRecoil(gunData);
+        // characterController.ApplyRecoil(gunData);
 
         // muzzleFlash
     }
