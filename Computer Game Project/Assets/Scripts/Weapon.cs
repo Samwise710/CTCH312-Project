@@ -120,9 +120,10 @@ public class Weapon : MonoBehaviour
 
         float x = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
         float y = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
+        float z = UnityEngine.Random.Range(-bulletSpread, bulletSpread);
 
         // Return shooting direction with bullet spread
-        return direction + new Vector3(x, y, 0);
+        return direction + new Vector3(x, y, z);
     }
 
     private IEnumerator DestroyBullet(GameObject bullet, float delay)
