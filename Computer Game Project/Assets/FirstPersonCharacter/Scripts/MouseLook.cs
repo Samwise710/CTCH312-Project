@@ -19,33 +19,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion m_CameraTargetRot;
         private bool m_cursorIsLocked = true;
 
-        // needed for recoil
-        [Header("Recoil")]
-        private Vector3 targetRecoil = Vector3.zero;
-        private Vector3 currentRecoil = Vector3.zero;
-
         public void Init(Transform character, Transform camera)
         {
             m_CharacterTargetRot = character.localRotation;
             m_CameraTargetRot = camera.localRotation;
-        }
-
-        // needed for recoil
-        public void ApplyRecoil(GunData gunData)
-        {
-            float recoilX = UnityEngine.Random.Range(-gunData.maxRecoil.x, gunData.maxRecoil.x) * gunData.recoilAmount;
-            float recoilY = UnityEngine.Random.Range(-gunData.maxRecoil.y, gunData.maxRecoil.y) * gunData.recoilAmount;
-
-            targetRecoil += new Vector3(recoilX, recoilY, 0);
-
-            currentRecoil = Vector3.MoveTowards(currentRecoil, targetRecoil, Time.deltaTime * gunData.recoilSpeed);
-        }
-
-        // needed for recoil
-        public void ResetRecoil(GunData gunData)
-        {
-            currentRecoil = Vector3.MoveTowards(currentRecoil, Vector3.zero, Time.deltaTime * gunData.resetRecoilSpeed);
-            targetRecoil = Vector3.MoveTowards(targetRecoil, Vector3.zero, Time.deltaTime * gunData.resetRecoilSpeed);
         }
 
         public void LookRotation(Transform character, Transform camera)
@@ -54,7 +31,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             float xRot = Input.GetAxis("Mouse Y") * YSensitivity;
 
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
-            m_CameraTargetRot *= Quaternion.Euler (-xRot + currentRecoil.y, 0f + currentRecoil.x, 0f);
+            m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
 
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);

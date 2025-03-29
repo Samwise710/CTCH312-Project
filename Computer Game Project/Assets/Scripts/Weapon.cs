@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using NUnit.Framework.Interfaces;
+using TMPro;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -22,8 +24,14 @@ public class Weapon : MonoBehaviour
     public float bulletVelocity = 30;
     public float bulletLifeTime = 3f;
 
+    // Weapon Effects
     public GameObject muzzleFlashEffect;
     private Animator animator;
+
+    // Reload Stats
+    public float reloadTime;
+    public int magazineCapacity, bulletsRemaining;
+    public bool isReloading;
 
     public enum SelectFireMode
     {
@@ -39,11 +47,18 @@ public class Weapon : MonoBehaviour
         readyToFire = true;
         remainingBulletsInBurst = bulletsPerBurst;
         animator = GetComponent<Animator>();
+
+        bulletsRemaining = magazineCapacity;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (bulletsRemaining == 0 && isFiring)
+        {
+            SoundManager.Instance.dryFireSoundGlock18.Play();
+        }
+
         if (currentSelectFireMode == SelectFireMode.FullAuto)
         {
             // Holding down left mouse button
@@ -55,15 +70,33 @@ public class Weapon : MonoBehaviour
             isFiring = Input.GetKeyDown(KeyCode.Mouse0);
         }
 
-        if (readyToFire && isFiring)
+        if (Input.GetKeyDown(KeyCode.R) && bulletsRemaining < magazineCapacity && !isReloading)
+        {
+            Reload();
+        }
+
+        // Automatically reload when magazine is empty
+        if (readyToFire && !isFiring && !isReloading && bulletsRemaining <=0)
+        {
+            // Reload();
+        }
+
+        if (readyToFire && isFiring && bulletsRemaining > 0)
         {
             remainingBulletsInBurst = bulletsPerBurst;
             FireWeapon();
+        }
+
+        if (AmmoManager.Instance.ammoDisplay != null)
+        {
+            AmmoManager.Instance.ammoDisplay.text = $"{bulletsRemaining / bulletsPerBurst}/{magazineCapacity / bulletsPerBurst}";
         }
     }
 
     private void FireWeapon()
     {
+        bulletsRemaining--;
+
         muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
         animator.SetTrigger("RECOIL");
 
@@ -98,6 +131,19 @@ public class Weapon : MonoBehaviour
             remainingBulletsInBurst -= 1;
             Invoke("FireWeapon", firingDelay);
         }
+    }
+
+    private void Reload()
+    {
+        SoundManager.Instance.reloadingSoundGlock18.Play();
+        isReloading = true;
+        Invoke("ReloadComplete", reloadTime);
+    }
+
+    private void ReloadComplete()
+    {
+        bulletsRemaining = magazineCapacity;
+        isReloading = false;
     }
 
     private void ResetShot()

@@ -256,7 +256,7 @@ MonoBehaviour:
   isFiring: 0
   readyToFire: 0
   firingDelay: 0.15
-  bulletsPerBurst: 3
+  bulletsPerBurst: 1
   remainingBulletsInBurst: 0
   bulletSpread: 0.1
   bulletPrefab: {fileID: 8735703967670150814, guid: 672bca48a169ec346ad991d309a0bea0, type: 3}
@@ -264,6 +264,11 @@ MonoBehaviour:
   bulletVelocity: 50
   bulletLifeTime: 2
   muzzleFlashEffect: {fileID: 0}
+  reloadTime: 0
+  magazineCapacity: 0
+  bulletsRemaining: 0
+  isReloading: 0
+  ammoDisplay: {fileID: 0}
   currentSelectFireMode: 0
 --- !u!1 &6654400114214277298
 GameObject:
