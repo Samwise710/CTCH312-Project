@@ -33,6 +33,15 @@ public class Weapon : MonoBehaviour
     public int magazineCapacity, bulletsRemaining;
     public bool isReloading;
 
+    // Track what weapon we are using
+    public enum WeaponModel
+    {
+        Glock18,
+        AK47
+    }
+
+    public WeaponModel currentWeaponModel;
+
     public enum SelectFireMode
     {
         SemiAuto,
@@ -56,7 +65,9 @@ public class Weapon : MonoBehaviour
     {
         if (bulletsRemaining == 0 && isFiring)
         {
-            SoundManager.Instance.dryFireSoundGlock18.Play();
+            // SoundManager.Instance.dryFireSoundGlock18.Play(); // old sound setup
+            SoundManager.Instance.PlayDryFireSound(currentWeaponModel);
+
         }
 
         if (currentSelectFireMode == SelectFireMode.FullAuto)
@@ -100,7 +111,8 @@ public class Weapon : MonoBehaviour
         muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
         animator.SetTrigger("RECOIL");
 
-        SoundManager.Instance.shootingSoundGlock18.Play();
+        // SoundManager.Instance.shootingSoundGlock18.Play(); // old sound setup
+        SoundManager.Instance.PlayFiringSound(currentWeaponModel);
 
         readyToFire = false;
 
@@ -135,7 +147,11 @@ public class Weapon : MonoBehaviour
 
     private void Reload()
     {
-        SoundManager.Instance.reloadingSoundGlock18.Play();
+        // SoundManager.Instance.reloadingSoundGlock18.Play(); // old sound setup
+        SoundManager.Instance.PlayReloadSound(currentWeaponModel);
+
+        animator.SetTrigger("RELOAD");
+
         isReloading = true;
         Invoke("ReloadComplete", reloadTime);
     }
