@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    // Weapon Stats
+    // Weapon Fire Stats
     public bool isFiring, readyToFire;
     bool allowReset = true;
     public float firingDelay = 2f;
@@ -22,6 +22,9 @@ public class Weapon : MonoBehaviour
     public float bulletVelocity = 30;
     public float bulletLifeTime = 3f;
 
+    public GameObject muzzleFlashEffect;
+    private Animator animator;
+
     public enum SelectFireMode
     {
         SemiAuto,
@@ -35,6 +38,7 @@ public class Weapon : MonoBehaviour
     {
         readyToFire = true;
         remainingBulletsInBurst = bulletsPerBurst;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -60,6 +64,11 @@ public class Weapon : MonoBehaviour
 
     private void FireWeapon()
     {
+        muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
+        animator.SetTrigger("RECOIL");
+
+        SoundManager.Instance.shootingSoundGlock18.Play();
+
         readyToFire = false;
 
         Vector3 shootingDirection = CalculateDirectionAndSpeed().normalized;
