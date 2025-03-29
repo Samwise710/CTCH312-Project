@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Target
   - Wall
+  - Metal
+  - Wood
+  - Sand
+  - Flesh
   layers:
   - Default
   - TransparentFX

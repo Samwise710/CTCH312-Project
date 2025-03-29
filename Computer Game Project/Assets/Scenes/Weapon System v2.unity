@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 36810525}
   m_Layer: 6
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -974,7 +974,7 @@ GameObject:
   - component: {fileID: 115774640}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1818,8 +1818,8 @@ GameObject:
   - component: {fileID: 232105631}
   - component: {fileID: 232105630}
   m_Layer: 0
-  m_Name: Red Target
-  m_TagString: Target
+  m_Name: Red Target Wood
+  m_TagString: Wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1929,7 +1929,7 @@ GameObject:
   - component: {fileID: 239178613}
   m_Layer: 6
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2373,7 +2373,7 @@ GameObject:
   - component: {fileID: 270579433}
   m_Layer: 6
   m_Name: Stairs (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5077,7 +5077,7 @@ GameObject:
   - component: {fileID: 417107172}
   m_Layer: 6
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5594,7 +5594,7 @@ GameObject:
   - component: {fileID: 446389291}
   m_Layer: 6
   m_Name: Stairs (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8370,13 +8370,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07da89320f9864043a80f2a35ac33399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 574903308}
   isFiring: 0
   readyToFire: 0
   firingDelay: 0.125
   bulletsPerBurst: 3
   remainingBulletsInBurst: 0
-  bulletSpread: 0.25
+  bulletSpread: 0.1
   bulletPrefab: {fileID: 8735703967670150814, guid: 672bca48a169ec346ad991d309a0bea0, type: 3}
   bulletSpawn: {fileID: 2061655046}
   bulletVelocity: 50
@@ -8398,7 +8397,7 @@ GameObject:
   - component: {fileID: 458848940}
   m_Layer: 6
   m_Name: Stairs (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10323,7 +10322,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d0f24c2417b2b49a03c73f6840a9d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletImpactEffect: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  bulletImpactStoneEffect: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
+  bulletImpactMetalEffect: {fileID: 1000010355441670, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
+  bulletImpactWoodEffect: {fileID: 1000011190285628, guid: beb3acff7ab73944fb8f470f24d74ed3, type: 3}
+  bulletImpactSandEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
+  bulletImpactFleshEffect: {fileID: 1000013169864706, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
 --- !u!4 &553340566
 Transform:
   m_ObjectHideFlags: 0
@@ -10344,11 +10347,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
   m_PrefabInstance: {fileID: 866198223}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &574903308 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2000000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
-  m_PrefabInstance: {fileID: 866198223}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &636290609
 GameObject:
   m_ObjectHideFlags: 0
@@ -10365,7 +10363,7 @@ GameObject:
   - component: {fileID: 636290610}
   m_Layer: 6
   m_Name: Stairs (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12695,7 +12693,7 @@ GameObject:
   - component: {fileID: 853207314}
   m_Layer: 6
   m_Name: Cube (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13452,7 +13450,7 @@ GameObject:
   - component: {fileID: 1055126439}
   m_Layer: 6
   m_Name: Stairs (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16221,7 +16219,7 @@ GameObject:
   - component: {fileID: 1102705173}
   m_Layer: 0
   m_Name: Metal Plate Target (2)
-  m_TagString: Target
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16523,7 +16521,7 @@ GameObject:
   - component: {fileID: 1143780614}
   m_Layer: 6
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20348,7 +20346,7 @@ GameObject:
   - component: {fileID: 1172008953}
   m_Layer: 6
   m_Name: Cube (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20700,7 +20698,7 @@ GameObject:
   - component: {fileID: 1172921139}
   m_Layer: 6
   m_Name: Stairs
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22612,7 +22610,7 @@ GameObject:
   - component: {fileID: 1243344851}
   m_Layer: 6
   m_Name: Stairs (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24523,7 +24521,7 @@ GameObject:
   - component: {fileID: 1258400074}
   m_Layer: 0
   m_Name: Metal Plate Target
-  m_TagString: Target
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24694,7 +24692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -24734,7 +24732,7 @@ GameObject:
   - component: {fileID: 1319347650}
   m_Layer: 0
   m_Name: Metal Plate Target (3)
-  m_TagString: Target
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24871,7 +24869,7 @@ GameObject:
   - component: {fileID: 1423715231}
   m_Layer: 6
   m_Name: Cube (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25482,8 +25480,8 @@ GameObject:
   - component: {fileID: 1460341282}
   - component: {fileID: 1460341281}
   m_Layer: 0
-  m_Name: Green Target
-  m_TagString: Target
+  m_Name: Green Target Sand
+  m_TagString: Sand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25592,7 +25590,7 @@ GameObject:
   - component: {fileID: 1485710196}
   m_Layer: 0
   m_Name: Metal Plate Target (4)
-  m_TagString: Target
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25893,7 +25891,7 @@ GameObject:
   - component: {fileID: 1656593367}
   m_Layer: 0
   m_Name: Metal Plate Target (1)
-  m_TagString: Target
+  m_TagString: Metal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26195,7 +26193,7 @@ GameObject:
   - component: {fileID: 1755009693}
   m_Layer: 6
   m_Name: Cube (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26699,8 +26697,8 @@ GameObject:
   - component: {fileID: 1844785268}
   - component: {fileID: 1844785267}
   m_Layer: 0
-  m_Name: Blue Target
-  m_TagString: Target
+  m_Name: Blue Target Flesh
+  m_TagString: Flesh
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26912,7 +26910,7 @@ GameObject:
   - component: {fileID: 1884650507}
   m_Layer: 6
   m_Name: Stairs (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
