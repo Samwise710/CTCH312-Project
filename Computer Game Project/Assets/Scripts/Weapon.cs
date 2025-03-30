@@ -71,6 +71,8 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
+            GetComponent<Outline>().enabled = false; // double check that outline is disabled
+
             if (bulletsRemaining == 0 && isFiring && !isReloading)
             {
                 // SoundManager.Instance.dryFireSoundGlock18.Play(); // old sound setup
@@ -105,11 +107,6 @@ public class Weapon : MonoBehaviour
                 remainingBulletsInBurst = bulletsPerBurst;
                 FireWeapon();
             }
-
-            if (AmmoManager.Instance.ammoDisplay != null)
-            {
-                AmmoManager.Instance.ammoDisplay.text = $"{bulletsRemaining / bulletsPerBurst}/{magazineCapacity / bulletsPerBurst}";
-            } 
         }
     }
 
