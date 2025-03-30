@@ -33,6 +33,10 @@ public class Weapon : MonoBehaviour
     public int magazineCapacity, bulletsRemaining;
     public bool isReloading;
 
+    // Where to put weapon in camera view
+    public Vector3 spawnPosition;
+    public Vector3 spawnRotation;
+
     // Track what weapon we are using
     public enum WeaponModel
     {
@@ -106,42 +110,45 @@ public class Weapon : MonoBehaviour
 
     private void FireWeapon()
     {
-        bulletsRemaining--;
-
-        muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
-        animator.SetTrigger("RECOIL");
-
-        // SoundManager.Instance.shootingSoundGlock18.Play(); // old sound setup
-        SoundManager.Instance.PlayFiringSound(currentWeaponModel);
-
-        readyToFire = false;
-
-        Vector3 shootingDirection = CalculateDirectionAndSpeed().normalized;
-
-        // Create the bullet
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-
-        // Aim bullet in shooting direction
-        bullet.transform.forward = shootingDirection;
-
-        // Shoot the bullet
-        bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
-
-        // Destroy the bullet after some amount of time
-        StartCoroutine(DestroyBullet(bullet, bulletLifeTime));
-
-        // Check if we are finished firing
-        if (allowReset)
+        if (!isReloading) // only fire if weapon isn't currently reloading
         {
-            Invoke("ResetShot", firingDelay);
-            allowReset = false;
-        }
+            bulletsRemaining--;
 
-        // Burst mode
-        if (currentSelectFireMode == SelectFireMode.Burst && remainingBulletsInBurst > 1)
-        {
-            remainingBulletsInBurst -= 1;
-            Invoke("FireWeapon", firingDelay);
+            muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
+            animator.SetTrigger("RECOIL");
+
+            // SoundManager.Instance.shootingSoundGlock18.Play(); // old sound setup
+            SoundManager.Instance.PlayFiringSound(currentWeaponModel);
+
+            readyToFire = false;
+
+            Vector3 shootingDirection = CalculateDirectionAndSpeed().normalized;
+
+            // Create the bullet
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+
+            // Aim bullet in shooting direction
+            bullet.transform.forward = shootingDirection;
+
+            // Shoot the bullet
+            bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
+
+            // Destroy the bullet after some amount of time
+            StartCoroutine(DestroyBullet(bullet, bulletLifeTime));
+
+            // Check if we are finished firing
+            if (allowReset)
+            {
+                Invoke("ResetShot", firingDelay);
+                allowReset = false;
+            }
+
+            // Burst mode
+            if (currentSelectFireMode == SelectFireMode.Burst && remainingBulletsInBurst > 1)
+            {
+                remainingBulletsInBurst -= 1;
+                Invoke("FireWeapon", firingDelay);
+            }
         }
     }
 
