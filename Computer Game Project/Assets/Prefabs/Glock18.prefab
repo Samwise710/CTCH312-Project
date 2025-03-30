@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 5117469700466184258}
   - component: {fileID: 6016322992214181638}
   - component: {fileID: 4445662847267966551}
+  - component: {fileID: 807274356221447339}
   m_Layer: 0
   m_Name: Glock18
   m_TagString: Untagged
@@ -287,7 +288,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.34496891, y: -0.34496891, z: -0.61724913, w: 0.61724913}
   m_LocalPosition: {x: 2.361, y: 1.055, z: 4.611}
-  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_LocalScale: {x: 1.75, y: 1.7499998, z: 1.7499999}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 270861984905625619}
@@ -317,8 +318,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0425, y: 0.2, z: 0.285}
-  m_Center: {x: 0, y: -0.035, z: 0.015}
+  m_Size: {x: 0.034612093, y: 0.18965295, z: 0.28130114}
+  m_Center: {x: -0.0002504076, y: -0.033617724, z: 0.013568171}
 --- !u!114 &6016322992214181638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07da89320f9864043a80f2a35ac33399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveWeapon: 0
   isFiring: 0
   readyToFire: 0
   firingDelay: 0.15
@@ -358,7 +360,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3882877017333000251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 78410617cc75e424cad101748a632633, type: 2}
   m_CullingMode: 0
@@ -372,6 +374,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &807274356221447339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3882877017333000251}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0.061501265, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &6547096066986623623
 GameObject:
   m_ObjectHideFlags: 0

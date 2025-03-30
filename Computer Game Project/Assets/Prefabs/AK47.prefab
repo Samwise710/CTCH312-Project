@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 5244979570071611283}
   - component: {fileID: 7287067256188992381}
   - component: {fileID: 3978987164159758517}
+  - component: {fileID: 2171911131715821961}
   m_Layer: 0
   m_Name: AK47
   m_TagString: Untagged
@@ -149,8 +150,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0425, y: 0.2, z: 0.285}
-  m_Center: {x: 0, y: -0.035, z: 0.015}
+  m_Size: {x: 0.07, y: 0.3345533, z: 1.2169338}
+  m_Center: {x: 1.1787623e-16, y: -0.04958383, z: 0.1913142}
 --- !u!114 &7287067256188992381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07da89320f9864043a80f2a35ac33399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActiveWeapon: 0
   isFiring: 0
   readyToFire: 0
   firingDelay: 0.1
@@ -190,7 +192,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039599054776812212}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b87be1fe570640e489284d246090dd5b, type: 2}
   m_CullingMode: 0
@@ -204,6 +206,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2171911131715821961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039599054776812212}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2211063487979643735
 GameObject:
   m_ObjectHideFlags: 0
