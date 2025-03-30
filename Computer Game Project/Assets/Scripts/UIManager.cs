@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
         if (activeWeapon)
         {
             magazineAmmoUI.text = $"{activeWeapon.bulletsRemaining / activeWeapon.bulletsPerBurst}";
-            totalAmmoUI.text = $"{activeWeapon.magazineCapacity / activeWeapon.bulletsPerBurst}";
+            totalAmmoUI.text = $"{WeaponManager.Instance.CheckAmmoRemaining(activeWeapon.currentWeaponModel)}";
 
             Weapon.WeaponModel model = activeWeapon.currentWeaponModel;
             ammoTypeUI.sprite = GetAmmoSprite(model);

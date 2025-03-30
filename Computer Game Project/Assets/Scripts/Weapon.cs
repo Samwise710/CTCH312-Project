@@ -32,7 +32,7 @@ public class Weapon : MonoBehaviour
 
     // Reload Stats
     public float reloadTime;
-    public int magazineCapacity, bulletsRemaining;
+    public int magazineCapacity, bulletsRemaining, bulletsMissing;
     public bool isReloading;
 
     // Where to put weapon in camera view
@@ -64,6 +64,7 @@ public class Weapon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         bulletsRemaining = magazineCapacity;
+        bulletsMissing = 0;
     }
 
     // Update is called once per frame
@@ -91,7 +92,8 @@ public class Weapon : MonoBehaviour
                 isFiring = Input.GetKeyDown(KeyCode.Mouse0);
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && bulletsRemaining < magazineCapacity && !isReloading)
+            if (Input.GetKeyDown(KeyCode.R) && bulletsRemaining < magazineCapacity && !isReloading && 
+                WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel) > 0)
             {
                 Reload();
             }
@@ -115,6 +117,7 @@ public class Weapon : MonoBehaviour
         if (!isReloading) // only fire if weapon isn't currently reloading
         {
             bulletsRemaining--;
+            bulletsMissing++;
 
             muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
             animator.SetTrigger("RECOIL");
@@ -167,7 +170,28 @@ public class Weapon : MonoBehaviour
 
     private void ReloadComplete()
     {
-        bulletsRemaining = magazineCapacity;
+        if (WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel) >= magazineCapacity)
+        {
+            bulletsRemaining = magazineCapacity;
+            WeaponManager.Instance.DecreaseTotalAmmo(bulletsMissing, currentWeaponModel);
+        }
+        else // less than one magazine of ammo remaining
+        {
+            // Weapon missing more ammo than we have remaining
+            if (bulletsMissing > WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel))
+            {
+                bulletsRemaining += WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel);
+                WeaponManager.Instance.DecreaseTotalAmmo(WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel), currentWeaponModel);
+            }
+            else // Weapon missing less or equal ammo than we have remaining
+            {
+                bulletsRemaining = magazineCapacity;
+                WeaponManager.Instance.DecreaseTotalAmmo(bulletsMissing, currentWeaponModel);
+            }
+        }
+
+        // Set missing ammo in case you don't fully reload magazine because not enough reserve ammo
+        bulletsMissing = magazineCapacity - bulletsRemaining;
         isReloading = false;
     }
 

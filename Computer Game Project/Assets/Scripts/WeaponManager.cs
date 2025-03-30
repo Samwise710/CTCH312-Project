@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using static Weapon;
 
 public class WeaponManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class WeaponManager : MonoBehaviour
     public List<GameObject> weaponSlots;
 
     public GameObject activeWeaponSlot;
+
+    [Header("Ammo")]
+    public int totalGlock18Ammo = 0;
+    public int totalAK47Ammo = 0;
 
     private void Awake()
     {
@@ -76,6 +81,20 @@ public class WeaponManager : MonoBehaviour
         weapon.animator.enabled = true; // enable animations on pick up
     }
 
+    internal void PickUpAmmo(AmmoCrate ammo)
+    {
+        switch (activeWeaponSlot.GetComponentInChildren<Weapon>().currentWeaponModel)
+        {
+            case Weapon.WeaponModel.Glock18:
+                totalGlock18Ammo = ammo.Glock18AmmoCapacity;
+                break;
+
+            case Weapon.WeaponModel.AK47:
+                totalAK47Ammo = ammo.AK47AmmoCapacity;
+                break;
+        }
+    }
+
     private void DropCurrentWeapon(GameObject pickedUpWeapon)
     {
         if (activeWeaponSlot.transform.childCount > 0)
@@ -108,6 +127,34 @@ public class WeaponManager : MonoBehaviour
         {
             Weapon newWeapon = activeWeaponSlot.transform.GetChild(0).GetComponent<Weapon>();
             newWeapon.isActiveWeapon = true;
+        }
+    }
+
+    internal void DecreaseTotalAmmo(int bulletsToDecrease, Weapon.WeaponModel currentWeaponModel)
+    {
+        switch (currentWeaponModel)
+        {
+            case Weapon.WeaponModel.Glock18:
+                totalGlock18Ammo -= bulletsToDecrease; 
+                break;
+            case Weapon.WeaponModel.AK47:
+                totalAK47Ammo -= bulletsToDecrease;
+                break;
+        }
+    }
+
+    public int CheckAmmoRemaining(Weapon.WeaponModel currentWeaponModel)
+    {
+        switch (currentWeaponModel)
+        {
+            case Weapon.WeaponModel.Glock18:
+                return totalGlock18Ammo;
+
+            case Weapon.WeaponModel.AK47:
+                return totalAK47Ammo;
+
+            default:
+                return 0;
         }
     }
 }

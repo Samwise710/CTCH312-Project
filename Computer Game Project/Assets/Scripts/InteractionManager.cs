@@ -5,6 +5,7 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager Instance { get; set; }
 
     public Weapon hoveredWeapon = null;
+    public AmmoCrate hoveredAmmoCrate = null;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class InteractionManager : MonoBehaviour
         {
             GameObject objectHitByRaycast = hit.transform.gameObject;
 
+            // Weapon
             if (objectHitByRaycast.GetComponent<Weapon>())
             {
                 hoveredWeapon = objectHitByRaycast.gameObject.GetComponent<Weapon>();
@@ -42,6 +44,26 @@ public class InteractionManager : MonoBehaviour
                 if (hoveredWeapon)
                 {
                     hoveredWeapon.GetComponent<Outline>().enabled = false;
+                }
+            }
+
+            // Ammo Crate
+            if (objectHitByRaycast.GetComponent<AmmoCrate>())
+            {
+                hoveredAmmoCrate = objectHitByRaycast.gameObject.GetComponent<AmmoCrate>();
+                hoveredAmmoCrate.GetComponent<Outline>().enabled = true;
+
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    WeaponManager.Instance.PickUpAmmo(hoveredAmmoCrate);
+                    // Reduce player score? spend points for ammo
+                }
+            }
+            else
+            {
+                if (hoveredAmmoCrate)
+                {
+                    hoveredAmmoCrate.GetComponent<Outline>().enabled = false;
                 }
             }
         }

@@ -1860,6 +1860,8 @@ MonoBehaviour:
   - {fileID: 750661683}
   - {fileID: 324617854}
   activeWeaponSlot: {fileID: 0}
+  totalGlock18Ammo: 0
+  totalAK47Ammo: 0
 --- !u!4 &219542286
 Transform:
   m_ObjectHideFlags: 0
@@ -31329,6 +31331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoveredWeapon: {fileID: 0}
+  hoveredAmmoCrate: {fileID: 0}
 --- !u!1001 &219103316977791295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31386,6 +31389,71 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2854e9fcc097eda43a972106581a2dd9, type: 3}
+--- !u!1001 &3416650174499787545
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1643179865839583167, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_Name
+      value: AmmoCrate
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3562062064758587260, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510907052420348603, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: AK47AmmoCapacity
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510907052420348603, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
+      propertyPath: Glock18AmmoCapacity
+      value: 72
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b1856a84f8e66642bc422c59502863f, type: 3}
 --- !u!1001 &6637304439918527756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31461,3 +31529,4 @@ SceneRoots:
   - {fileID: 219542286}
   - {fileID: 6637304439918527756}
   - {fileID: 219103316977791295}
+  - {fileID: 3416650174499787545}
