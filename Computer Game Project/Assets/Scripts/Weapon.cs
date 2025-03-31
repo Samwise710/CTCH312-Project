@@ -78,6 +78,11 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender"); // display onto of everything else
+            }
+
             if (Input.GetMouseButtonDown(1))
             {
                 EnterADS();
@@ -124,6 +129,13 @@ public class Weapon : MonoBehaviour
             {
                 remainingBulletsInBurst = bulletsPerBurst;
                 FireWeapon();
+            }
+        }
+        else // not active weapon
+        {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Default"); // stops weapon from showing through walls
             }
         }
     }

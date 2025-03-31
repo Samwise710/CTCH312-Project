@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 270861984905625619}
   - component: {fileID: 2451109423996831423}
   - component: {fileID: 5439812269945580692}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pistol_B_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3062590441884895342}
   - component: {fileID: 3701085109428153832}
   - component: {fileID: 1176527232063613460}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pistol_B_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 5026183681643072781}
   - component: {fileID: 3529458917368977336}
   - component: {fileID: 4226166771500922165}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pistol_B_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 6016322992214181638}
   - component: {fileID: 4445662847267966551}
   - component: {fileID: 807274356221447339}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Glock18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 200177514243411279}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 5481248658617967617}
   - component: {fileID: 1106161355957627409}
   - component: {fileID: 4088607558984318803}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pistol_B_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 7276753789513354803}
   - component: {fileID: 1302372193080671386}
   - component: {fileID: 8708358841086745924}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pistol_B_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 6273172862527959904}
   - component: {fileID: 7873056979433863742}
   - component: {fileID: 3059332994266860411}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: MuzzleFlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
