@@ -23,7 +23,10 @@ public class UIManager : MonoBehaviour
     public Image tacticalUI;
     public TextMeshProUGUI tacticalCountUI;
 
+    [Header("Other")]
     public Sprite emptySlot;
+
+    public GameObject crosshair;
 
     private void Awake()
     {

@@ -13,14 +13,16 @@ public class Weapon : MonoBehaviour
     bool allowReset = true;
     public float firingDelay = 2f;
 
-    // Burst fire
+    [Header("Burst")] // Burst fire
     public int bulletsPerBurst = 3;
     public int remainingBulletsInBurst;
 
-    // Spread
+    [Header("Spread")] // Spread
     public float bulletSpread;
+    public float hipfireSpread;
+    public float adsSpread;
 
-    // Bullet info
+    [Header("Bullet")] // Bullet info
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public float bulletVelocity = 30;
@@ -30,14 +32,16 @@ public class Weapon : MonoBehaviour
     public GameObject muzzleFlashEffect;
     internal Animator animator;
 
-    // Reload Stats
+    [Header("Reload")] // Reload Stats
     public float reloadTime;
     public int magazineCapacity, bulletsRemaining, bulletsMissing;
     public bool isReloading;
 
-    // Where to put weapon in camera view
+    [Header("Other")] // Where to put weapon in camera view
     public Vector3 spawnPosition;
     public Vector3 spawnRotation;
+
+    bool isADS;
 
     // Track what weapon we are using
     public enum WeaponModel
@@ -65,6 +69,8 @@ public class Weapon : MonoBehaviour
 
         bulletsRemaining = magazineCapacity;
         bulletsMissing = 0;
+
+        bulletSpread = hipfireSpread;
     }
 
     // Update is called once per frame
@@ -72,6 +78,16 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                EnterADS();
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                ExitADS();
+            }
+
             GetComponent<Outline>().enabled = false; // double check that outline is disabled
 
             if (bulletsRemaining == 0 && isFiring && !isReloading)
@@ -112,6 +128,22 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    private void EnterADS()
+    {
+        animator.SetTrigger("enterADS");
+        isADS = true;
+        UIManager.Instance.crosshair.SetActive(false);
+        bulletSpread = adsSpread;
+    }
+
+    private void ExitADS()
+    {
+        animator.SetTrigger("exitADS");
+        isADS = false;
+        UIManager.Instance.crosshair.SetActive(true);
+        bulletSpread = hipfireSpread;
+    }
+    
     private void FireWeapon()
     {
         if (!isReloading) // only fire if weapon isn't currently reloading
@@ -120,7 +152,15 @@ public class Weapon : MonoBehaviour
             bulletsMissing++;
 
             muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
-            animator.SetTrigger("RECOIL");
+
+            if (isADS)
+            {
+                animator.SetTrigger("RECOIL_ADS");
+            }
+            else
+            {
+                animator.SetTrigger("RECOIL");
+            }
 
             // SoundManager.Instance.shootingSoundGlock18.Play(); // old sound setup
             SoundManager.Instance.PlayFiringSound(currentWeaponModel);
