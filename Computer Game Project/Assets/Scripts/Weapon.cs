@@ -6,19 +6,23 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public bool isActiveWeapon;
+
     // Weapon Fire Stats
     public bool isFiring, readyToFire;
     bool allowReset = true;
     public float firingDelay = 2f;
 
-    // Burst fire
+    [Header("Burst")] // Burst fire
     public int bulletsPerBurst = 3;
     public int remainingBulletsInBurst;
 
-    // Spread
+    [Header("Spread")] // Spread
     public float bulletSpread;
+    public float hipfireSpread;
+    public float adsSpread;
 
-    // Bullet info
+    [Header("Bullet")] // Bullet info
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public float bulletVelocity = 30;
@@ -26,12 +30,18 @@ public class Weapon : MonoBehaviour
 
     // Weapon Effects
     public GameObject muzzleFlashEffect;
-    private Animator animator;
+    internal Animator animator;
 
-    // Reload Stats
+    [Header("Reload")] // Reload Stats
     public float reloadTime;
-    public int magazineCapacity, bulletsRemaining;
+    public int magazineCapacity, bulletsRemaining, bulletsMissing;
     public bool isReloading;
+
+    [Header("Other")] // Where to put weapon in camera view
+    public Vector3 spawnPosition;
+    public Vector3 spawnRotation;
+
+    bool isADS;
 
     // Track what weapon we are using
     public enum WeaponModel
@@ -58,90 +68,144 @@ public class Weapon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         bulletsRemaining = magazineCapacity;
+        bulletsMissing = 0;
+
+        bulletSpread = hipfireSpread;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (bulletsRemaining == 0 && isFiring)
+        if (isActiveWeapon)
         {
-            // SoundManager.Instance.dryFireSoundGlock18.Play(); // old sound setup
-            SoundManager.Instance.PlayDryFireSound(currentWeaponModel);
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender"); // display onto of everything else
+            }
 
-        }
+            if (Input.GetMouseButtonDown(1))
+            {
+                EnterADS();
+            }
 
-        if (currentSelectFireMode == SelectFireMode.FullAuto)
-        {
-            // Holding down left mouse button
-            isFiring = Input.GetKey(KeyCode.Mouse0);
-        }
-        else if (currentSelectFireMode == SelectFireMode.SemiAuto || currentSelectFireMode == SelectFireMode.Burst)
-        {
-            // Clicking left mouse button once
-            isFiring = Input.GetKeyDown(KeyCode.Mouse0);
-        }
+            if (Input.GetMouseButtonUp(1))
+            {
+                ExitADS();
+            }
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsRemaining < magazineCapacity && !isReloading)
-        {
-            Reload();
-        }
+            GetComponent<Outline>().enabled = false; // double check that outline is disabled
 
-        // Automatically reload when magazine is empty
-        if (readyToFire && !isFiring && !isReloading && bulletsRemaining <=0)
-        {
-            // Reload();
-        }
+            if (bulletsRemaining == 0 && isFiring && !isReloading)
+            {
+                // SoundManager.Instance.dryFireSoundGlock18.Play(); // old sound setup
+                SoundManager.Instance.PlayDryFireSound(currentWeaponModel);
 
-        if (readyToFire && isFiring && bulletsRemaining > 0)
-        {
-            remainingBulletsInBurst = bulletsPerBurst;
-            FireWeapon();
-        }
+            }
 
-        if (AmmoManager.Instance.ammoDisplay != null)
+            if (currentSelectFireMode == SelectFireMode.FullAuto)
+            {
+                // Holding down left mouse button
+                isFiring = Input.GetKey(KeyCode.Mouse0);
+            }
+            else if (currentSelectFireMode == SelectFireMode.SemiAuto || currentSelectFireMode == SelectFireMode.Burst)
+            {
+                // Clicking left mouse button once
+                isFiring = Input.GetKeyDown(KeyCode.Mouse0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && bulletsRemaining < magazineCapacity && !isReloading && 
+                WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel) > 0)
+            {
+                Reload();
+            }
+
+            // Automatically reload when magazine is empty
+            if (readyToFire && !isFiring && !isReloading && bulletsRemaining <= 0)
+            {
+                // Reload();
+            }
+
+            if (readyToFire && isFiring && bulletsRemaining > 0)
+            {
+                remainingBulletsInBurst = bulletsPerBurst;
+                FireWeapon();
+            }
+        }
+        else // not active weapon
         {
-            AmmoManager.Instance.ammoDisplay.text = $"{bulletsRemaining / bulletsPerBurst}/{magazineCapacity / bulletsPerBurst}";
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("Default"); // stops weapon from showing through walls
+            }
         }
     }
 
+    private void EnterADS()
+    {
+        animator.SetTrigger("enterADS");
+        isADS = true;
+        UIManager.Instance.crosshair.SetActive(false);
+        bulletSpread = adsSpread;
+    }
+
+    private void ExitADS()
+    {
+        animator.SetTrigger("exitADS");
+        isADS = false;
+        UIManager.Instance.crosshair.SetActive(true);
+        bulletSpread = hipfireSpread;
+    }
+    
     private void FireWeapon()
     {
-        bulletsRemaining--;
-
-        muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
-        animator.SetTrigger("RECOIL");
-
-        // SoundManager.Instance.shootingSoundGlock18.Play(); // old sound setup
-        SoundManager.Instance.PlayFiringSound(currentWeaponModel);
-
-        readyToFire = false;
-
-        Vector3 shootingDirection = CalculateDirectionAndSpeed().normalized;
-
-        // Create the bullet
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
-
-        // Aim bullet in shooting direction
-        bullet.transform.forward = shootingDirection;
-
-        // Shoot the bullet
-        bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
-
-        // Destroy the bullet after some amount of time
-        StartCoroutine(DestroyBullet(bullet, bulletLifeTime));
-
-        // Check if we are finished firing
-        if (allowReset)
+        if (!isReloading) // only fire if weapon isn't currently reloading
         {
-            Invoke("ResetShot", firingDelay);
-            allowReset = false;
-        }
+            bulletsRemaining--;
+            bulletsMissing++;
 
-        // Burst mode
-        if (currentSelectFireMode == SelectFireMode.Burst && remainingBulletsInBurst > 1)
-        {
-            remainingBulletsInBurst -= 1;
-            Invoke("FireWeapon", firingDelay);
+            muzzleFlashEffect.GetComponent<ParticleSystem>().Play();
+
+            if (isADS)
+            {
+                animator.SetTrigger("RECOIL_ADS");
+            }
+            else
+            {
+                animator.SetTrigger("RECOIL");
+            }
+
+            // SoundManager.Instance.shootingSoundGlock18.Play(); // old sound setup
+            SoundManager.Instance.PlayFiringSound(currentWeaponModel);
+
+            readyToFire = false;
+
+            Vector3 shootingDirection = CalculateDirectionAndSpeed().normalized;
+
+            // Create the bullet
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);
+
+            // Aim bullet in shooting direction
+            bullet.transform.forward = shootingDirection;
+
+            // Shoot the bullet
+            bullet.GetComponent<Rigidbody>().AddForce(shootingDirection * bulletVelocity, ForceMode.Impulse);
+
+            // Destroy the bullet after some amount of time
+            StartCoroutine(DestroyBullet(bullet, bulletLifeTime));
+
+            // Check if we are finished firing
+            if (allowReset)
+            {
+                Invoke("ResetShot", firingDelay);
+                allowReset = false;
+            }
+
+            // Burst mode
+            if (currentSelectFireMode == SelectFireMode.Burst && remainingBulletsInBurst > 1)
+            {
+                remainingBulletsInBurst -= 1;
+                Invoke("FireWeapon", firingDelay);
+            }
         }
     }
 
@@ -158,7 +222,28 @@ public class Weapon : MonoBehaviour
 
     private void ReloadComplete()
     {
-        bulletsRemaining = magazineCapacity;
+        if (WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel) >= magazineCapacity)
+        {
+            bulletsRemaining = magazineCapacity;
+            WeaponManager.Instance.DecreaseTotalAmmo(bulletsMissing, currentWeaponModel);
+        }
+        else // less than one magazine of ammo remaining
+        {
+            // Weapon missing more ammo than we have remaining
+            if (bulletsMissing > WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel))
+            {
+                bulletsRemaining += WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel);
+                WeaponManager.Instance.DecreaseTotalAmmo(WeaponManager.Instance.CheckAmmoRemaining(currentWeaponModel), currentWeaponModel);
+            }
+            else // Weapon missing less or equal ammo than we have remaining
+            {
+                bulletsRemaining = magazineCapacity;
+                WeaponManager.Instance.DecreaseTotalAmmo(bulletsMissing, currentWeaponModel);
+            }
+        }
+
+        // Set missing ammo in case you don't fully reload magazine because not enough reserve ammo
+        bulletsMissing = magazineCapacity - bulletsRemaining;
         isReloading = false;
     }
 
